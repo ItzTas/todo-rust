@@ -5,4 +5,3 @@ edition = "2021"
 
 [dependencies]
 druid = { git = "https://github.com/linebender/druid.git" }
-ferris-says = "0.3.1"

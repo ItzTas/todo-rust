@@ -1,10 +1,11 @@
+mod models;
 use druid::{
     widget::{Button, Flex, Scroll},
     AppLauncher, PlatformError, Widget, WidgetExt, WindowDesc,
 };
 
 fn main() -> Result<(), PlatformError> {
-    let main_window = WindowDesc::new(build_widget());
+    let main_window = WindowDesc::new(build_widget()).title("To do :)");
     let data = 0_u32;
     AppLauncher::with_window(main_window)
         .log_to_console()
