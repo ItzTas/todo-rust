@@ -1,6 +1,7 @@
-use druid::{Data, Lens};
+use druid::Data;
+use druid::Lens;
 
 #[derive(Clone, Data, Lens)]
-pub struct Title {
-    input_text: String,
+pub struct InputData {
+    pub input_text: String,
 }
