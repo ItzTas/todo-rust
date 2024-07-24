@@ -1,31 +1,29 @@
 mod models;
-use druid::LensExt;
-use druid::{
-    widget::{Flex, Label, TextBox},
-    AppLauncher, PlatformError, Widget, WidgetExt, WindowDesc,
+mod widgets_internal;
+use druid::{AppLauncher, PlatformError, WindowDesc};
+use models::{
+    app_state::AppState,
+    widget_data::{InputData, TaskData},
 };
-use models::{app_state::AppState, input_data::InputData};
+use widgets_internal::widgets::build_main_widget;
 
 fn main() -> Result<(), PlatformError> {
-    let main_window = WindowDesc::new(build_widget()).title("To do :)");
-    let data = AppState {
-        input_data: InputData {
-            input_text: String::new(),
-        },
-    };
+    let main_window = WindowDesc::new(build_main_widget()).title("To do :)");
+    let data = initial_state();
     AppLauncher::with_window(main_window)
         .log_to_console()
         .launch(data)
 }
 
-fn build_widget() -> impl Widget<AppState> {
-    let textbox = TextBox::new()
-        .with_placeholder("Walk the dog")
-        .lens(AppState::input_data.then(InputData::input_text));
-
-    let label = Label::dynamic(|data: &String, _env| format!("You typed: {}", &data))
-        .padding(5.)
-        .lens(AppState::input_data.then(InputData::input_text));
-
-    Flex::column().with_child(label).with_child(textbox)
+fn initial_state() -> AppState {
+    AppState {
+        input_data: InputData {
+            input_title: String::new(),
+            input_text: String::new(),
+        },
+        task_data: TaskData {
+            task_title: String::new(),
+            task_text: String::new(),
+        },
+    }
 }
